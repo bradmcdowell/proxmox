@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # URL of the raw script on GitHub
-SCRIPT_URL="https://raw.githubusercontent.com/yourusername/yourrepository/main/bashscript.sh"
+SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/refs/heads/main/sampleupdate.sh"
 
 # Temporary file to download the new script
 TEMP_SCRIPT="/tmp/bashscript.sh"
@@ -26,5 +26,5 @@ update_script() {
 update_script
 
 # Your script's main functionality goes here
-echo "Running the main script..."
+echo "Running the main script... V1"
 # Add your main script code here
