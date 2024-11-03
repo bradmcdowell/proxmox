@@ -26,5 +26,5 @@ update_script() {
 update_script
 
 # Your script's main functionality goes here
-echo "Running the main script... V1"
+echo "Running the main script... V2"
 # Add your main script code here
