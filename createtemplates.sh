@@ -1,7 +1,7 @@
 #!/bin/bash
 SCRIPT_VER="24.11.04"
 # URL of the raw script on GitHub
-SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/refs/heads/main/sampleupdate.sh"
+SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/refs/heads/main/createtemplates.sh"
 
 echo $SCRIPT_VER
 # Temporary file to download the new script
