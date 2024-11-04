@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.04.1034"
+SCRIPT_VER="24.11.04.1038"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
@@ -27,6 +27,8 @@ update_script() {
 
 # Call the update function
 update_script
+
+# Finished update script. The main script is below
 
 #Create template
 #args:
@@ -75,6 +77,81 @@ function create_template() {
     #Remove file when done
     rm $3
 }
+
+
+
+
+
+
+
+#!/bin/bash
+
+show_menu() {
+    clear
+    echo "==============================================================="
+    echo "      MAIN MENU $SCRIPT_VER     "
+    echo "==============================================================="
+    echo "1. Display Date and Time"
+    echo "2. List Files in Current Directory"
+    echo "3. Show Disk Usage"
+    echo "4. Check Memory Usage"
+    echo "5. Exit"
+    echo "==============================================================="
+    echo -n "Enter your choice [1-5]: "
+}
+
+read_option() {
+    local choice
+    read -r choice
+    case $choice in
+        1) display_date_time ;;
+        2) list_files ;;
+        3) show_disk_usage ;;
+        4) check_memory_usage ;;
+        5) exit 0 ;;
+        *) echo "Invalid option! Please try again." ;;
+    esac
+}
+
+display_date_time() {
+    echo "Current Date and Time: $(date)"
+    pause
+}
+
+list_files() {
+    echo "Files in Current Directory:"
+    ls -l
+    pause
+}
+
+show_disk_usage() {
+    echo "Disk Usage:"
+    df -h
+    pause
+}
+
+check_memory_usage() {
+    echo "Memory Usage:"
+    free -h
+    pause
+}
+
+pause() {
+    read -n 1 -s -r -p "Press any key to continue..."
+}
+
+while true; do
+    show_menu
+    read_option
+done
+
+
+
+
+
+
+
+
 
 
 #Path to your ssh authorized_keys file
