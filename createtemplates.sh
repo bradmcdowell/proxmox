@@ -1,11 +1,11 @@
 #!/bin/bash
-SCRIPT_VER="24.11.04.1017"
+SCRIPT_VER="24.11.04.1022"
 # URL of the raw script on GitHub
-SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/refs/heads/main/createtemplates.sh"
+SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
-echo $SCRIPT_VER
+echo "Current script version: $SCRIPT_VER"
 # Temporary file to download the new script
-TEMP_SCRIPT="/tmp/bashscript.sh"
+TEMP_SCRIPT=$(mktemp)
 
 # Function to update the script
 update_script() {
@@ -13,19 +13,18 @@ update_script() {
     curl -s -o "$TEMP_SCRIPT" "$SCRIPT_URL"
     if ! cmp -s "$0" "$TEMP_SCRIPT"; then
         echo "New version found. Updating..."
-        mv "$TEMP_SCRIPT" "$0"
+        cp "$TEMP_SCRIPT" "$0"
         chmod +x "$0"
         echo "Update complete. Restarting script..."
 #        exec "$0" "$@"
         exit 1
     else
-        echo "$SCRIPT_VER You are already using the latest version."
+        echo "You are already using the latest version: $SCRIPT_VER"
         rm "$TEMP_SCRIPT"
     fi
 }
 
 # Call the update function
-update_script
 
 #Create template
 #args:
