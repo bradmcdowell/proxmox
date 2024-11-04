@@ -1,11 +1,12 @@
 #!/bin/bash
-SCRIPT_VER="24.11.04.1029"
+SCRIPT_VER="24.11.04.1032"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
 echo "Current script version: $SCRIPT_VER"
 # Temporary file to download the new script
-TEMP_SCRIPT=$(mktemp)
+#TEMP_SCRIPT=$(mktemp)
+TEMP_SCRIPT="/tmp/bashscript.sh"
 
 # Function to update the script
 update_script() {
