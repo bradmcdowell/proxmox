@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.04"
+SCRIPT_VER="24.11.04.1012"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/refs/heads/main/createtemplates.sh"
 
@@ -18,7 +18,7 @@ update_script() {
         echo "Update complete. Restarting script..."
         exec "$0" "$@"
     else
-        echo "You are already using the latest version."
+        echo "$SCRIPT_VER You are already using the latest version."
         rm "$TEMP_SCRIPT"
     fi
 }
