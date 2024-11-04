@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.04.1055"
+SCRIPT_VER="24.11.05.953"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
@@ -101,7 +101,7 @@ show_menu() {
     echo "Default User: $username"
     echo "ssh key path: $ssh_keyfile"
     echo "==============================================================="
-    echo "1. Display Date and Time"
+    echo "1. Debian 12"
     echo "2. List Files in Current Directory"
     echo "3. Show Disk Usage"
     echo "4. Check Memory Usage"
@@ -114,7 +114,7 @@ read_option() {
     local choice
     read -r choice
     case $choice in
-        1) display_date_time ;;
+        1) option_1 ;;
         2) list_files ;;
         3) show_disk_usage ;;
         4) check_memory_usage ;;
@@ -123,8 +123,11 @@ read_option() {
     esac
 }
 
-display_date_time() {
-    echo "Current Date and Time: $(date)"
+option_1() {
+    wget "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2"
+    virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
+    create_template 950 "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
+
     pause
 }
 
