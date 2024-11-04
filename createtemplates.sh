@@ -25,6 +25,7 @@ update_script() {
 }
 
 # Call the update function
+update_script
 
 #Create template
 #args:
