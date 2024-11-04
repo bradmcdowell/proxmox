@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.04.1052"
+SCRIPT_VER="24.11.04.1055"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
@@ -96,9 +96,10 @@ show_menu() {
     clear
     echo "==============================================================="
     echo "      MAIN MENU $SCRIPT_VER     "
-    echo $storage
-    echo $username
-    echo $ssh_keyfile
+    echo "==============================================================="
+    echo "Storage Name: $storage"
+    echo "Default User: $username"
+    echo "ssh key path: $ssh_keyfile"
     echo "==============================================================="
     echo "1. Display Date and Time"
     echo "2. List Files in Current Directory"
