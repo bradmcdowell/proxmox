@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.04.1014"
+SCRIPT_VER="24.11.04.1017"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/refs/heads/main/createtemplates.sh"
 
@@ -16,7 +16,8 @@ update_script() {
         mv "$TEMP_SCRIPT" "$0"
         chmod +x "$0"
         echo "Update complete. Restarting script..."
-        exec "$0" "$@"
+#        exec "$0" "$@"
+        exit 1
     else
         echo "$SCRIPT_VER You are already using the latest version."
         rm "$TEMP_SCRIPT"
@@ -25,12 +26,6 @@ update_script() {
 
 # Call the update function
 update_script
-
-# Your script's main functionality goes here
-echo "Running the main script... V2"
-# Add your main script code here
-
-
 
 #Create template
 #args:
