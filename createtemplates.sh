@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.04.1038"
+SCRIPT_VER="24.11.04.1050"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
@@ -29,6 +29,17 @@ update_script() {
 update_script
 
 # Finished update script. The main script is below
+
+#Path to your ssh authorized_keys file
+#Alternatively, use /etc/pve/priv/authorized_keys if you are already authorized
+#on the Proxmox system
+export ssh_keyfile=/root/sshkeys.pub
+#Username to create on VM template
+export username=localadmin
+
+#Name of your storage
+export storage=NAS1-NFS1
+
 
 #Create template
 #args:
@@ -81,15 +92,11 @@ function create_template() {
 
 
 
-
-
-
-#!/bin/bash
-
 show_menu() {
     clear
     echo "==============================================================="
     echo "      MAIN MENU $SCRIPT_VER     "
+    echo $storage
     echo "==============================================================="
     echo "1. Display Date and Time"
     echo "2. List Files in Current Directory"
