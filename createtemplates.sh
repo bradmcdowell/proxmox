@@ -1,4 +1,36 @@
 #!/bin/bash
+SCRIPT_VER="24.11.04"
+# URL of the raw script on GitHub
+SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/refs/heads/main/sampleupdate.sh"
+
+echo $SCRIPT_VER
+# Temporary file to download the new script
+TEMP_SCRIPT="/tmp/bashscript.sh"
+
+# Function to update the script
+update_script() {
+    echo "Checking for updates..."
+    curl -s -o "$TEMP_SCRIPT" "$SCRIPT_URL"
+    if ! cmp -s "$0" "$TEMP_SCRIPT"; then
+        echo "New version found. Updating..."
+        mv "$TEMP_SCRIPT" "$0"
+        chmod +x "$0"
+        echo "Update complete. Restarting script..."
+        exec "$0" "$@"
+    else
+        echo "You are already using the latest version."
+        rm "$TEMP_SCRIPT"
+    fi
+}
+
+# Call the update function
+update_script
+
+# Your script's main functionality goes here
+echo "Running the main script... V2"
+# Add your main script code here
+
+
 
 #Create template
 #args:
@@ -73,7 +105,7 @@ export storage=NAS1-NFS1
 wget "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2"
 virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
 
-create_template 902 "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
+#create_template 902 "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
 
 #qemu-img convert -f raw -O qcow2 /mnt/pve/NAS1-NFS1/images/902/base-902-disk-0.raw /mnt/pve/NAS1-NFS1/images/902/base-902-disk-0.qcow2
 
