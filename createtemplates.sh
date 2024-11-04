@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.04.1012"
+SCRIPT_VER="24.11.04.1014"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/refs/heads/main/createtemplates.sh"
 
@@ -102,8 +102,11 @@ export storage=NAS1-NFS1
 #wget "https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-genericcloud-amd64.qcow2"
 #create_template 900 "temp-debian-11" "debian-11-genericcloud-amd64.qcow2"
 #Bookworm (12) (stable)
-wget "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2"
-virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
+
+echo "Fix this later"
+#wget "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2"
+#virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
+
 
 #create_template 902 "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
 
