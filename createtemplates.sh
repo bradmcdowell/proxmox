@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.05.1548"
+SCRIPT_VER="24.11.05.1935"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
@@ -132,7 +132,8 @@ option_1() {
     # Download Image
     wget "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2"
     # Install packages on to image
-    virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
+    #virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
+    virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent --run-command 'rm -f /etc/machine-id'
     # Create VM
     create_template $vmid "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
     # convert image so snapshots can be made
