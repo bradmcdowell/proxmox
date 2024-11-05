@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.05.953"
+SCRIPT_VER="24.11.05.1524"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
@@ -82,6 +82,8 @@ function create_template() {
     #Resize the disk to 8G, a reasonable minimum. You can expand it more later.
     #If the disk is already bigger than 8G, this will fail, and that is okay.
     qm disk resize $1 scsi0 8G
+    # Tag Image as Linux
+    qm set $1 --tags Linux   
     #Make it a template
     qm template $1
 
@@ -124,10 +126,17 @@ read_option() {
 }
 
 option_1() {
+    read -p "Enter template VM ID: " vmid
+    echo "VM ID will be $vmid!"
+    # Download Image
     wget "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2"
+    # Install packages on to image
     virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
-    create_template 950 "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
-
+    # Create VM
+    create_template $vmid "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
+    # convert image so snapshots can be made
+    qemu-img convert -f raw -O qcow2 /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.raw /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.qcow2
+    qm set $vmid --scsi0 NAS1-NFS1:$vmid/base-$vmid-disk-0.qcow2
     pause
 }
 
