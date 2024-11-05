@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.05.1531"
+SCRIPT_VER="24.11.05.1548"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
@@ -104,7 +104,7 @@ show_menu() {
     echo "ssh key path: $ssh_keyfile"
     echo "==============================================================="
     echo "1. Debian 12"
-    echo "2. List Files in Current Directory"
+    echo "2. Ubuntu 24.10 (Oracular Oriole)"
     echo "3. Show Disk Usage"
     echo "4. Check Memory Usage"
     echo "5. Exit"
@@ -117,7 +117,7 @@ read_option() {
     read -r choice
     case $choice in
         1) option_1 ;;
-        2) list_files ;;
+        2) option_2 ;;
         3) show_disk_usage ;;
         4) check_memory_usage ;;
         5) exit 0 ;;
@@ -126,6 +126,7 @@ read_option() {
 }
 
 option_1() {
+    echo "Debian 12"
     read -p "Enter template VM ID: " vmid
     echo "VM ID will be $vmid!"
     # Download Image
@@ -140,10 +141,25 @@ option_1() {
     pause
 }
 
-list_files() {
-    echo "Files in Current Directory:"
-    ls -l
+option_2() {
+    echo "Ubuntu 24.10 (Oracular Oriole)"
+    read -p "Enter template VM ID: " vmid
+    echo "VM ID will be $vmid!"
+    # Download Image
+    wget "https://cloud-images.ubuntu.com/oracular/current/oracular-server-cloudimg-amd64.img"
+    # Install packages on to image
+    virt-customize -a oracular-server-cloudimg-amd64.img --install qemu-guest-agent
+    # Create VM
+    create_template $vmid "temp-ubuntu-24.10" "oracular-server-cloudimg-amd64.img"
+    # convert image so snapshots can be made
+    qemu-img convert -f raw -O qcow2 /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.raw /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.qcow2
+    qm set $vmid --scsi0 NAS1-NFS1:$vmid/base-$vmid-disk-0.qcow2
     pause
+
+#wget "https://cloud-images.ubuntu.com/oracular/current/oracular-server-cloudimg-amd64.img"
+#virt-customize -a oracular-server-cloudimg-amd64.img --install qemu-guest-agent
+#create_template 912 "temp-ubuntu-24-10" "oracular-server-cloudimg-amd64.img"
+
 }
 
 show_disk_usage() {
