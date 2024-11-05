@@ -137,7 +137,6 @@ option_1() {
     # Create VM
     create_template $vmid "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
     # convert image so snapshots can be made
-    pause
     qemu-img convert -f raw -O qcow2 /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.raw /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.qcow2
     qm set $vmid --scsi0 NAS1-NFS1:$vmid/base-$vmid-disk-0.qcow2
     pause
