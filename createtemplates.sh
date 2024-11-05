@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.05.1935"
+SCRIPT_VER="24.11.05.1943"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
@@ -137,6 +137,7 @@ option_1() {
     # Create VM
     create_template $vmid "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
     # convert image so snapshots can be made
+    pause
     qemu-img convert -f raw -O qcow2 /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.raw /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.qcow2
     qm set $vmid --scsi0 NAS1-NFS1:$vmid/base-$vmid-disk-0.qcow2
     pause
