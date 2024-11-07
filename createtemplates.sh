@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.05.2116"
+SCRIPT_VER="24.11.07.2146"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
@@ -83,7 +83,10 @@ function create_template() {
     #If the disk is already bigger than 8G, this will fail, and that is okay.
     qm disk resize $1 scsi0 8G
     # Tag Image as Linux
-    qm set $1 --tags Linux   
+    qm set $1 --tags Linux
+
+    # Wait a bit
+    sleep 20    
     #Make it a template
     qm template $1
 
@@ -132,7 +135,7 @@ option_1() {
     # Download Image
     wget "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2"
     # Install packages on to image
-    virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
+    # virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
     #virt-customize -a debian-12-genericcloud-amd64.qcow2 --run-command 'rm -f /etc/machine-id'
     # Create VM
     create_template $vmid "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
@@ -149,7 +152,7 @@ option_2() {
     # Download Image
     wget "https://cloud-images.ubuntu.com/oracular/current/oracular-server-cloudimg-amd64.img"
     # Install packages on to image
-    virt-customize -a oracular-server-cloudimg-amd64.img --install qemu-guest-agent
+    # virt-customize -a oracular-server-cloudimg-amd64.img --install qemu-guest-agent
     # Create VM
     create_template $vmid "temp-ubuntu-24.10" "oracular-server-cloudimg-amd64.img"
     # convert image so snapshots can be made
