@@ -166,7 +166,7 @@ option_2() {
 
 }
 
-option_1() {
+option_3() {
     echo "Talos"
     read -p "Enter template VM ID: " vmid
     echo "VM ID will be $vmid!"
