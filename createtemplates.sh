@@ -108,7 +108,7 @@ show_menu() {
     echo "==============================================================="
     echo "1. Debian 12"
     echo "2. Ubuntu 24.10 (Oracular Oriole)"
-    echo "3. Show Disk Usage"
+    echo "3. Talos"
     echo "4. Check Memory Usage"
     echo "5. Exit"
     echo "==============================================================="
@@ -121,7 +121,7 @@ read_option() {
     case $choice in
         1) option_1 ;;
         2) option_2 ;;
-        3) show_disk_usage ;;
+        3) option_3 ;;
         4) check_memory_usage ;;
         5) exit 0 ;;
         *) echo "Invalid option! Please try again." ;;
@@ -165,6 +165,24 @@ option_2() {
 #create_template 912 "temp-ubuntu-24-10" "oracular-server-cloudimg-amd64.img"
 
 }
+
+option_1() {
+    echo "Talos"
+    read -p "Enter template VM ID: " vmid
+    echo "VM ID will be $vmid!"
+    # Download Image
+    wget "https://factory.talos.dev/image/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515/v1.10.4/metal-amd64.qcow2"
+    # Install packages on to image
+    # virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
+    #virt-customize -a debian-12-genericcloud-amd64.qcow2 --run-command 'rm -f /etc/machine-id'
+    # Create VM
+    create_template $vmid "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
+    # convert image so snapshots can be made
+    qemu-img convert -f raw -O qcow2 /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.raw /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.qcow2
+    qm set $vmid --scsi0 NAS1-NFS1:$vmid/base-$vmid-disk-0.qcow2
+    pause
+}
+
 
 show_disk_usage() {
     echo "Disk Usage:"
