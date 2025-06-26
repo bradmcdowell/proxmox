@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="24.11.07.2146"
+SCRIPT_VER="25.06.25.1946"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
