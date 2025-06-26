@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_VER="25.06.25.1946"
+SCRIPT_VER="25.06.26.1946"
 # URL of the raw script on GitHub
 SCRIPT_URL="https://raw.githubusercontent.com/bradmcdowell/proxmox/main/createtemplates.sh"
 
@@ -173,10 +173,8 @@ option_3() {
     # Download Image
     wget "https://factory.talos.dev/image/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515/v1.10.4/metal-amd64.qcow2"
     # Install packages on to image
-    # virt-customize -a debian-12-genericcloud-amd64.qcow2 --install qemu-guest-agent
-    #virt-customize -a debian-12-genericcloud-amd64.qcow2 --run-command 'rm -f /etc/machine-id'
     # Create VM
-    create_template $vmid "temp-debian-12" "debian-12-genericcloud-amd64.qcow2"
+    create_template $vmid "temp-talos-12" "metal-amd64.qcow2"
     # convert image so snapshots can be made
     qemu-img convert -f raw -O qcow2 /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.raw /mnt/pve/NAS1-NFS1/images/$vmid/base-$vmid-disk-0.qcow2
     qm set $vmid --scsi0 NAS1-NFS1:$vmid/base-$vmid-disk-0.qcow2
